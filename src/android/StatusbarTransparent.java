@@ -8,6 +8,7 @@ import org.json.JSONException;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.view.WindowManager.LayoutParams;
+import android.graphics.Color;
 
 public class StatusbarTransparent extends CordovaPlugin {
 
@@ -18,7 +19,11 @@ public class StatusbarTransparent extends CordovaPlugin {
 			if(VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
 				cordova.getActivity().runOnUiThread( new Runnable() {
 					public void run() {
-						cordova.getActivity().getWindow().addFlags(LayoutParams.FLAG_TRANSLUCENT_STATUS);
+						Window window = cordova.getActivity().getWindow();
+						window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+						window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+						window.setStatusBarColor(Color.RED);
+
 					}
 				});
 				callback.success();
